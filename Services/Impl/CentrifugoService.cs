@@ -3,6 +3,7 @@ using System.Text;
 using DonationAlertsApiClient.Data;
 using DonationAlertsApiClient.Data.Impl;
 using DonationAlertsApiClient.Factories;
+using DonationAlertsApiClient.Helpers;
 using Newtonsoft.Json;
 using Websocket.Client;
 
@@ -80,7 +81,7 @@ public class CentrifugoService : ICentrifugoService
     {
         while (_websocketClient.IsRunning)
         {
-            Thread.Sleep(25000);
+            Thread.Sleep(ConstantDataHelper.PingPeriodicityMilliseconds);
             await SendRequest(_requestFactory.CreateRequest(CentrifugoRequestType.Ping));
         }
     }
