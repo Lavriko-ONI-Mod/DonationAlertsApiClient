@@ -14,4 +14,8 @@
       <PackageReference Include="Websocket.Client" Version="4.4.43" />
     </ItemGroup>
 
+    <PropertyGroup>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    </PropertyGroup>
+
 </Project>
