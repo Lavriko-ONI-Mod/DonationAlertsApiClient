@@ -19,7 +19,7 @@ public class DonationAlertData : IDonationAlertData
     public string MessageType { get; }
     
     [JsonProperty("payin_system")]
-    public string PaymentSystem { get; }
+    public PaymentSystemData PaymentSystem { get; }
     
     [JsonProperty("is_shown")]
     public bool IsShown { get; }
@@ -33,7 +33,7 @@ public class DonationAlertData : IDonationAlertData
     [JsonProperty("shown_at")]
     public DateTime? ShownAt { get; }
     
-    public DonationAlertData(long id, string name, string username, string recipientName, string message, string messageType, string paymentSystem, float amount, 
+    public DonationAlertData(long id, string name, string username, string recipientName, string message, string messageType, PaymentSystemData paymentSystem, float amount, 
         string currency, bool isShown, float amountInUserCurrency, DateTime? createdAt, DateTime? shownAt, string reason)
     {
         Id = id;
@@ -50,5 +50,15 @@ public class DonationAlertData : IDonationAlertData
         CreatedAt = createdAt;
         ShownAt = shownAt;
         Reason = reason;
+    }
+}
+
+public class PaymentSystemData
+{
+    public string Title { get; }
+
+    public PaymentSystemData(string title)
+    {
+        Title = title;
     }
 }

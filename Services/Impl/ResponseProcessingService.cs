@@ -2,15 +2,30 @@
 using DonationAlertsApiClient.Data.Impl;
 using DonationAlertsApiClient.Helpers;
 using Newtonsoft.Json;
+using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
 
 namespace DonationAlertsApiClient.Services.Impl;
 
 public class ResponseProcessingService : IResponseProcessingService
 {
+    private readonly ILoggerService _logger;
+    private readonly bool _suppressSerializationExceptions;
+    private readonly JsonSerializerSettings _serializerSettings;
+    
     public event Action<IDonationAlertData> ReceivedDonationAlert = delegate { };
     public event Action<IPollData> ReceivedPollUpdate = delegate { };
     public event Action<IDonationGoalsData> ReceivedDonationGoalsUpdate = delegate { };
 
+    public ResponseProcessingService(ILoggerService logger, bool suppressSerializationExceptions = true)
+    {
+        _logger = logger;
+        _suppressSerializationExceptions = suppressSerializationExceptions;
+        _serializerSettings = new JsonSerializerSettings
+        {
+            Error = OnJsonSerializationError
+        };
+    }
+    
     public void OnResponseReceived(ICentrifugoResponse centrifugoResponse)
     {
         if (centrifugoResponse.Result == null || !centrifugoResponse.Result.ContainsKey("data")) return;
@@ -34,19 +49,26 @@ public class ResponseProcessingService : IResponseProcessingService
 
     private void ProcessDonationAlert(string dataJson)
     {
-        var donationData = JsonConvert.DeserializeObject<DonationAlertData>(dataJson);
+        var donationData = JsonConvert.DeserializeObject<DonationAlertData>(dataJson, _serializerSettings);
         ReceivedDonationAlert(donationData);
     }
     
     private void ProcessPollUpdate(string dataJson)
     {
-        var pollData = JsonConvert.DeserializeObject<PollData>(dataJson);
+        var pollData = JsonConvert.DeserializeObject<PollData>(dataJson, _serializerSettings);
         ReceivedPollUpdate(pollData);
     }
     
     private void ProcessDonationGoalsUpdate(string dataJson)
     {
-        var goalsData = JsonConvert.DeserializeObject<DonationGoalsData>(dataJson);
+        var goalsData = JsonConvert.DeserializeObject<DonationGoalsData>(dataJson, _serializerSettings);
         ReceivedDonationGoalsUpdate(goalsData);
+    }
+    
+    private void OnJsonSerializationError(object sender, ErrorEventArgs errorArgs)
+    {
+        _logger.Log(this, errorArgs.ErrorContext.Error.Message);
+        if (_suppressSerializationExceptions)
+            errorArgs.ErrorContext.Handled = true;
     }
 }

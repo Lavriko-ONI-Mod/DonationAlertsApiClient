@@ -2,6 +2,7 @@
 using DonationAlertsApiClient.Factories;
 using DonationAlertsApiClient.Helpers;
 using DonationAlertsApiClient.Services;
+using Websocket.Client;
 
 namespace DonationAlertsApiClient.Client.Impl;
 
@@ -17,6 +18,11 @@ public class DonationAlertsClient : IDonationAlertsClient
     public event Action<IDonationAlertData> ReceivedDonationAlert = delegate { };
     public event Action<IPollData> ReceivedPollUpdate = delegate { };
     public event Action<IDonationGoalsData> ReceivedDonationGoalsUpdate = delegate { };
+    public event Action<ReconnectionType> CentrifugoReconnectionHappened
+    {
+        add => _centrifugoService.ReconnectionHappened += value;
+        remove => _centrifugoService.ReconnectionHappened -= value;
+    }
 
     private IDonationAlertsApiService _donationAlertsApiService;
     private ICentrifugoService _centrifugoService;

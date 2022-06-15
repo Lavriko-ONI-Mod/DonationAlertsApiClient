@@ -20,6 +20,7 @@ public class CentrifugoService : ICentrifugoService
     private readonly string _socketConnectionToken;
     
     public event Action<CentrifugoResponse> ResponseReceived = delegate { };
+    public event Action<ReconnectionType> ReconnectionHappened = delegate { };
 
     public string CentrifugoUserId { get; private set; }
     
@@ -32,7 +33,12 @@ public class CentrifugoService : ICentrifugoService
         
         _websocketClient = new WebsocketClient(new Uri(WebsocketUri));
         _websocketClient.ReconnectTimeout = TimeSpan.FromSeconds(30);
-        _websocketClient.ReconnectionHappened.Subscribe(info => _loggerService.Log(this, $"Reconnection happened, type: {info.Type}"));
+        //todo: handle reconnection properly
+        _websocketClient.ReconnectionHappened.Subscribe(info =>
+        {
+            _loggerService.Log(this, $"Reconnection happened, type: {info.Type}");
+            ReconnectionHappened(info.Type);
+        });
         _websocketClient.MessageReceived.Subscribe(OnMessageReceived);
 
         CentrifugoUserId = string.Empty;

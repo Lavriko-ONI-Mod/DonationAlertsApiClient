@@ -1,12 +1,15 @@
 ﻿using DonationAlertsApiClient.Data;
+using Websocket.Client;
 
 namespace DonationAlertsApiClient.Client;
 
 public interface IDonationAlertsClient
 {
+    //todo: add summary to events
     event Action<IDonationAlertData> ReceivedDonationAlert;
     event Action<IPollData> ReceivedPollUpdate;
     event Action<IDonationGoalsData> ReceivedDonationGoalsUpdate;
+    event Action<ReconnectionType> CentrifugoReconnectionHappened;
     
     /// <summary>
     /// Creates internal services, gets UserData and Socket connection token from DonationAlerts. This method needs to be called first. Requires <b>oauth-user-show</b> scope.

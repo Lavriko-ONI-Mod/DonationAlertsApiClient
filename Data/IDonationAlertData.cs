@@ -1,4 +1,7 @@
-﻿namespace DonationAlertsApiClient.Data;
+﻿//todo: refactor things like this, interfaces should not depend on implementation
+using DonationAlertsApiClient.Data.Impl;
+
+namespace DonationAlertsApiClient.Data;
 
 public interface IDonationAlertData
 {
@@ -8,7 +11,7 @@ public interface IDonationAlertData
     string RecipientName { get; }
     string Message { get; }
     string MessageType { get; }
-    string PaymentSystem { get; }
+    PaymentSystemData PaymentSystem { get; }
     float Amount { get; }
     string Currency { get; }
     bool IsShown { get; }
