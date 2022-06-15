@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace DonationAlertsApiClient.Data.Impl;
+namespace DonationAlertsApiClient.Data;
 
-public class PollData : IPollData
+public class PollData
 {
     public long Id { get; }
     public string Title { get; }

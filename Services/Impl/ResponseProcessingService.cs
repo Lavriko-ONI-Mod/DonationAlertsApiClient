@@ -1,5 +1,4 @@
 ﻿using DonationAlertsApiClient.Data;
-using DonationAlertsApiClient.Data.Impl;
 using DonationAlertsApiClient.Helpers;
 using Newtonsoft.Json;
 using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
@@ -12,9 +11,9 @@ public class ResponseProcessingService : IResponseProcessingService
     private readonly bool _suppressSerializationExceptions;
     private readonly JsonSerializerSettings _serializerSettings;
     
-    public event Action<IDonationAlertData> ReceivedDonationAlert = delegate { };
-    public event Action<IPollData> ReceivedPollUpdate = delegate { };
-    public event Action<IDonationGoalsData> ReceivedDonationGoalsUpdate = delegate { };
+    public event Action<DonationAlertData> ReceivedDonationAlert = delegate { };
+    public event Action<PollData> ReceivedPollUpdate = delegate { };
+    public event Action<DonationGoalsData> ReceivedDonationGoalsUpdate = delegate { };
 
     public ResponseProcessingService(ILoggerService logger, bool suppressSerializationExceptions = true)
     {
@@ -26,7 +25,7 @@ public class ResponseProcessingService : IResponseProcessingService
         };
     }
     
-    public void OnResponseReceived(ICentrifugoResponse centrifugoResponse)
+    public void OnResponseReceived(CentrifugoResponse centrifugoResponse)
     {
         if (centrifugoResponse.Result == null || !centrifugoResponse.Result.ContainsKey("data")) return;
         if (!centrifugoResponse.Result.TryGetValue("channel", out var channel)) return;

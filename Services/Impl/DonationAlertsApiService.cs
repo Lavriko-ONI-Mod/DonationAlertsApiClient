@@ -1,5 +1,4 @@
 ﻿using DonationAlertsApiClient.Data;
-using DonationAlertsApiClient.Data.Impl;
 using Newtonsoft.Json;
 
 namespace DonationAlertsApiClient.Services.Impl;
@@ -13,7 +12,7 @@ public class DonationAlertsApiService : IDonationAlertsApiService
         _httpService = httpService;
     }
 
-    public async Task<IUserData> GetUserData()
+    public async Task<UserData> GetUserData()
     {
         var response = await _httpService.SendRequestAsync("https://www.donationalerts.com/api/v1/user/oauth", HttpMethod.Get);
         return JsonConvert.DeserializeObject<UserDataResponse>(response)?.Data;
@@ -27,7 +26,7 @@ public class DonationAlertsApiService : IDonationAlertsApiService
         return JsonConvert.DeserializeObject<ChannelsSubscriptionDataResponse>(response)?.Channels;
     }
 
-    public async Task<IDonationAlertListData> GetDonationAlertsList()
+    public async Task<DonationAlertListData> GetDonationAlertsList()
     {
         var response = await _httpService.SendRequestAsync("https://www.donationalerts.com/api/v1/alerts/donations", HttpMethod.Get);
         return JsonConvert.DeserializeObject<DonationAlertListData>(response);

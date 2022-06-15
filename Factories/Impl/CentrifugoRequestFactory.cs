@@ -1,5 +1,4 @@
 ﻿using DonationAlertsApiClient.Data;
-using DonationAlertsApiClient.Data.Impl;
 using DonationAlertsApiClient.Services;
 
 namespace DonationAlertsApiClient.Factories.Impl;
@@ -13,7 +12,7 @@ public class CentrifugoRequestFactory : ICentrifugoRequestFactory
         _requestIdService = requestIdService;
     }
 
-    public ICentrifugoRequest CreateRequest(CentrifugoRequestType method, params (string Key, object Value)[] parameters)
+    public CentrifugoRequest CreateRequest(CentrifugoRequestType method, params (string Key, object Value)[] parameters)
     {
         return new CentrifugoRequest(_requestIdService.GetId(), method, parameters);
     }

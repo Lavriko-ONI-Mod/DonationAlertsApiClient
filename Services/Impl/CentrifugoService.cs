@@ -1,7 +1,6 @@
 ﻿using System.Net.WebSockets;
 using System.Text;
 using DonationAlertsApiClient.Data;
-using DonationAlertsApiClient.Data.Impl;
 using DonationAlertsApiClient.Factories;
 using DonationAlertsApiClient.Helpers;
 using Newtonsoft.Json;
@@ -60,7 +59,7 @@ public class CentrifugoService : ICentrifugoService
         pingThread.Start();
     }
 
-    public async Task SubscribeToChannel(IChannelSubscriptionData channelSubscriptionData)
+    public async Task SubscribeToChannel(ChannelSubscriptionData channelSubscriptionData)
     {
         var subscribeRequest = _requestFactory.CreateRequest(CentrifugoRequestType.Subscribe, 
             ("channel", channelSubscriptionData.Channel), ("token", channelSubscriptionData.Token));
@@ -75,7 +74,7 @@ public class CentrifugoService : ICentrifugoService
         await SendRequest(subscribeRequest);
     }
     
-    public async Task SendRequest(ICentrifugoRequest request)
+    public async Task SendRequest(CentrifugoRequest request)
     {
         var requestJson = JsonConvert.SerializeObject(request);
         _loggerService.Log(this, $"[SENT] {requestJson}");

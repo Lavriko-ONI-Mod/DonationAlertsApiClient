@@ -15,9 +15,9 @@ public class DonationAlertsClient : IDonationAlertsClient
     private readonly ICentrifugoServiceFactory _centrifugoServiceFactory;
     private readonly IResponseProcessingService _responseProcessingService;
     
-    public event Action<IDonationAlertData> ReceivedDonationAlert = delegate { };
-    public event Action<IPollData> ReceivedPollUpdate = delegate { };
-    public event Action<IDonationGoalsData> ReceivedDonationGoalsUpdate = delegate { };
+    public event Action<DonationAlertData> ReceivedDonationAlert = delegate { };
+    public event Action<PollData> ReceivedPollUpdate = delegate { };
+    public event Action<DonationGoalsData> ReceivedDonationGoalsUpdate = delegate { };
     public event Action<ReconnectionType> CentrifugoReconnectionHappened
     {
         add => _centrifugoService.ReconnectionHappened += value;
@@ -26,7 +26,7 @@ public class DonationAlertsClient : IDonationAlertsClient
 
     private IDonationAlertsApiService _donationAlertsApiService;
     private ICentrifugoService _centrifugoService;
-    private IUserData _userData;
+    private UserData _userData;
 
     public DonationAlertsClient(IDonationAlertsApiServiceFactory donationAlertsApiServiceFactory, ICentrifugoServiceFactory centrifugoServiceFactory, 
         IResponseProcessingService responseProcessingService)
@@ -88,7 +88,7 @@ public class DonationAlertsClient : IDonationAlertsClient
 
 #endregion
 
-    public async Task<IDonationAlertListData> GetDonationAlertsList()
+    public async Task<DonationAlertListData> GetDonationAlertsList()
     {
         return await _donationAlertsApiService.GetDonationAlertsList();
     }
@@ -105,17 +105,17 @@ public class DonationAlertsClient : IDonationAlertsClient
         foreach (var channel in channelsData) await _centrifugoService.UnsubscribeFromChannel(channel.Channel);
     }
 
-    private void OnReceivedDonationGoalsUpdate(IDonationGoalsData data)
+    private void OnReceivedDonationGoalsUpdate(DonationGoalsData data)
     {
         ReceivedDonationGoalsUpdate(data);
     }
 
-    private void OnReceivedPollUpdate(IPollData data)
+    private void OnReceivedPollUpdate(PollData data)
     {
         ReceivedPollUpdate(data);
     }
 
-    private void OnReceivedDonationAlert(IDonationAlertData data)
+    private void OnReceivedDonationAlert(DonationAlertData data)
     {
         ReceivedDonationAlert(data);
     }

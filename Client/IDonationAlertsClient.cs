@@ -6,9 +6,9 @@ namespace DonationAlertsApiClient.Client;
 public interface IDonationAlertsClient
 {
     //todo: add summary to events
-    event Action<IDonationAlertData> ReceivedDonationAlert;
-    event Action<IPollData> ReceivedPollUpdate;
-    event Action<IDonationGoalsData> ReceivedDonationGoalsUpdate;
+    event Action<DonationAlertData> ReceivedDonationAlert;
+    event Action<PollData> ReceivedPollUpdate;
+    event Action<DonationGoalsData> ReceivedDonationGoalsUpdate;
     event Action<ReconnectionType> CentrifugoReconnectionHappened;
     
     /// <summary>
@@ -39,7 +39,7 @@ public interface IDonationAlertsClient
     /// <summary>
     /// Gets last donation alerts. Requires <b>oauth-donation-index</b> scope.
     /// </summary>
-    Task<IDonationAlertListData> GetDonationAlertsList();
+    Task<DonationAlertListData> GetDonationAlertsList();
 
     Task UnsubscribeFromDonationAlerts();
     Task UnsubscribeFromDonationGoals();

@@ -1,6 +1,6 @@
-﻿namespace DonationAlertsApiClient.Data.Impl;
+﻿namespace DonationAlertsApiClient.Data;
 
-public class ChannelSubscriptionData : IChannelSubscriptionData
+public class ChannelSubscriptionData
 {
     public string Channel { get; }
     public string Token { get; }

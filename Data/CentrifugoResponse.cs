@@ -1,6 +1,6 @@
-﻿namespace DonationAlertsApiClient.Data.Impl;
+﻿namespace DonationAlertsApiClient.Data;
 
-public class CentrifugoResponse : ICentrifugoResponse
+public class CentrifugoResponse
 {
     public int Id { get; }
     public Dictionary<string, object> Result { get; }

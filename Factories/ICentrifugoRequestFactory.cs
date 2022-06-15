@@ -4,5 +4,5 @@ namespace DonationAlertsApiClient.Factories;
 
 public interface ICentrifugoRequestFactory
 {
-    ICentrifugoRequest CreateRequest(CentrifugoRequestType method, params (string Key, object Value)[] parameters);
+    CentrifugoRequest CreateRequest(CentrifugoRequestType method, params (string Key, object Value)[] parameters);
 }

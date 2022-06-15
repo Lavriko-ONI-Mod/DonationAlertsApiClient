@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace DonationAlertsApiClient.Data.Impl;
+namespace DonationAlertsApiClient.Data;
 
-public class DonationAlertListData : IDonationAlertListData
+public class DonationAlertListData
 {
     public DonationAlertListLinksData Links { get; }
     public DonationAlertListMetaData Meta { get; }

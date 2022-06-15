@@ -4,9 +4,9 @@ namespace DonationAlertsApiClient.Services;
 
 public interface IResponseProcessingService
 {
-    event Action<IDonationAlertData> ReceivedDonationAlert;
-    event Action<IPollData> ReceivedPollUpdate;
-    event Action<IDonationGoalsData> ReceivedDonationGoalsUpdate;
+    event Action<DonationAlertData> ReceivedDonationAlert;
+    event Action<PollData> ReceivedPollUpdate;
+    event Action<DonationGoalsData> ReceivedDonationGoalsUpdate;
     
-    void OnResponseReceived(ICentrifugoResponse centrifugoResponse);
+    void OnResponseReceived(CentrifugoResponse centrifugoResponse);
 }

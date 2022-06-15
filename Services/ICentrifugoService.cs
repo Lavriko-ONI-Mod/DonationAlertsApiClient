@@ -1,5 +1,4 @@
 ﻿using DonationAlertsApiClient.Data;
-using DonationAlertsApiClient.Data.Impl;
 using Websocket.Client;
 
 namespace DonationAlertsApiClient.Services;
@@ -11,7 +10,7 @@ public interface ICentrifugoService
     string CentrifugoUserId { get; }
     Task Start();
     Task Connect();
-    Task SubscribeToChannel(IChannelSubscriptionData channelSubscriptionData);
-    Task SendRequest(ICentrifugoRequest request);
+    Task SubscribeToChannel(ChannelSubscriptionData channelSubscriptionData);
+    Task SendRequest(CentrifugoRequest request);
     Task UnsubscribeFromChannel(string channel);
 }
