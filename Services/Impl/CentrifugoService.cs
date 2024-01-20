@@ -31,6 +31,7 @@ public class CentrifugoService : ICentrifugoService
         _centrifugoUserIdAcquired = new TaskCompletionSource<bool>();
         
         _websocketClient = new WebsocketClient(new Uri(WebsocketUri));
+        _websocketClient.MessageEncoding = Encoding.UTF8;
         _websocketClient.ReconnectTimeout = TimeSpan.FromSeconds(30);
         //todo: handle reconnection properly
         _websocketClient.ReconnectionHappened.Subscribe(info =>
